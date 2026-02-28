@@ -1,26 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Nunito:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Backgrounds — dark roast, like café walls at 7pm */
+  --color-base: #2c1f14; /* deep coffee brown — the page */
+  --color-surface: #3a2a1c; /* cards — slightly lifted */
+  --color-surface-hover: #42301f; /* cards on hover */
+
+  /* Borders — visible but not harsh */
+  --color-border: #5a3e28; /* warm dark border */
+  --color-border-strong: #6e4e34; /* stronger divider */
+
+  /* Text — warm cream tones, easy on the eyes */
+  --color-ink: #f2e4cc; /* primary — warm cream */
+  --color-ink-muted: #b89878; /* secondary — latte tone */
+  --color-ink-faint: #7a6048; /* placeholders, disabled */
+
+  /* Accent — caramel, warm and vivid without being harsh */
+  --color-amber: #d4922a; /* caramel accent */
+  --color-amber-dark: #b87820; /* hover — deeper */
+  --color-amber-bg: #3d2a14; /* soft amber fill */
+  --color-amber-border: #6b4820; /* amber border */
+
+  /* Typography */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Nunito", system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-up 0.4s ease forwards;
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 0px,
+    var(--color-surface-hover) 120px,
+    var(--color-border) 240px
+  );
+  background-size: 500px 100%;
+  animation: shimmer 1.6s infinite linear;
 }
