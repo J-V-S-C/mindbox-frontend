@@ -84,13 +84,13 @@ pnpm install
 2. Configure environment variables. Create a `.env.local` file in the root directory and set the GraphQL API endpoint:
 
 ```env
-NEXT_PUBLIC_GRAPHQL_URI=http://localhost:8080/query
+NEXT_PUBLIC_GRAPHQL_URI=http://localhost:3333/query
 ```
 
 3. Start the development server:
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
 The application will be available at `http://localhost:3000`.
