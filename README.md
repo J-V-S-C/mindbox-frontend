@@ -14,24 +14,54 @@ The frontend application for MindBox, providing a responsive interface for manag
 
 ## Project Structure
 
-The project follows a modular, feature-based architecture within the Next.js `app` directory:
-
-```text
+````text
 app/
-├── components/          # Reusable UI components grouped by domain
-│   ├── categories/      # Category cards, headers, and modals
-│   ├── roadmaps/        # Roadmap lists and forms
-│   ├── tasks/           # Task items, lists, and filters
-│   └── ui/              # Generic components (dialogs, skeletons, empty states)
-├── lib/                 # Core logic, clients, and utilities
-│   ├── apollo-client.ts # Apollo Client configuration
-│   ├── gql/             # Auto-generated GraphQL types and hooks
-│   ├── queries/         # GraphQL query and mutation definitions
-│   └── utils/           # Helper functions for categories and tasks
-├── mindbox/             # Main application routes
-│   └── roadmaps/        # Routing hierarchy for roadmaps, categories, and tasks
-└── globals.css          # Global styles and CSS variables
-```
+├── components/
+│   ├── ApolloProvider.tsx
+│   ├── categories/
+│   │   ├── CategoryCard.tsx
+│   │   ├── CategoryHeader.tsx
+│   │   └── CategoryModal.tsx
+│   ├── roadmaps/
+│   │   ├── CreateRoadmalModal.tsx
+│   │   ├── EditRoadmapModal.tsx
+│   │   ├── RoadmapCard.tsx
+│   │   └── ShowRoadmaps.tsx
+│   ├── tasks/
+│   │   ├── TaskEmptyState.tsx
+│   │   ├── TaskFilterTabs.tsx
+│   │   ├── TaskItem.tsx
+│   │   └── TaskModal.tsx
+│   └── ui/
+│       ├── ConfirmDialog.tsx
+│       ├── EmptyState.tsx
+│       ├── search.tsx
+│       └── skeletons/
+│           ├── category-page-skeleton.tsx
+│           ├── category-skeleton.tsx
+│           └── roadmap-skeleton.tsx
+├── globals.css
+├── layout.tsx
+├── lib/
+│   ├── apollo-client.ts
+│   ├── gql/
+│   ├── queries/
+│   │   ├── category-queries.ts
+│   │   ├── roadmap-queries.ts
+│   │   └── task-queries.ts
+│   └── utils/
+│       ├── category-utils.ts
+│       └── task-utils.ts
+├── mindbox/
+│   ├── roadmaps/
+│   │   ├── [id]/
+│   │   │   ├── [categoryId]/
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   └── page.tsx
+│   └── tasks/
+│       └── page.tsx
+└── page.tsx
 
 ## Getting Started
 
@@ -46,7 +76,7 @@ app/
 
 ```bash
 pnpm install
-```
+````
 
 2. Configure environment variables. Create a `.env.local` file in the root directory and set the GraphQL API endpoint:
 
