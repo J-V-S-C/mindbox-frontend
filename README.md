@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MindBox Frontend
+
+The frontend application for MindBox, providing a responsive interface for managing learning roadmaps, categories, and tasks. Built with Next.js, Apollo Client, and Tailwind CSS.
+
+## Tech Stack
+
+- Framework: Next.js (App Router)
+- UI Library: React
+- Language: TypeScript
+- Data Fetching: Apollo Client
+- API Protocol: GraphQL
+- Code Generation: GraphQL Code Generator
+- Styling: Tailwind CSS
+
+## Project Structure
+
+The project follows a modular, feature-based architecture within the Next.js `app` directory:
+
+```text
+app/
+├── components/          # Reusable UI components grouped by domain
+│   ├── categories/      # Category cards, headers, and modals
+│   ├── roadmaps/        # Roadmap lists and forms
+│   ├── tasks/           # Task items, lists, and filters
+│   └── ui/              # Generic components (dialogs, skeletons, empty states)
+├── lib/                 # Core logic, clients, and utilities
+│   ├── apollo-client.ts # Apollo Client configuration
+│   ├── gql/             # Auto-generated GraphQL types and hooks
+│   ├── queries/         # GraphQL query and mutation definitions
+│   └── utils/           # Helper functions for categories and tasks
+├── mindbox/             # Main application routes
+│   └── roadmaps/        # Routing hierarchy for roadmaps, categories, and tasks
+└── globals.css          # Global styles and CSS variables
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- pnpm (used as the package manager)
+
+### Installation
+
+1. Install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Configure environment variables. Create a `.env.local` file in the root directory and set the GraphQL API endpoint:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+NEXT_PUBLIC_GRAPHQL_URI=http://localhost:8080/query
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start the development server:
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+The application will be available at `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## GraphQL Code Generation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project uses `@graphql-codegen` to automatically generate TypeScript types from your GraphQL queries and schema.
 
-## Deploy on Vercel
+Whenever you update the queries in `app/lib/queries/` or the backend schema changes, run the code generator to update the types in `app/lib/gql/`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm run codegen
+```

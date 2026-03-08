@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n  query GetCategory($id: ID!) {\n    category(id: $id) {\n      id\n      name\n      description\n      lifetime\n      roadmap {\n        id\n        name\n      }\n      tasks {\n        id\n        name\n        description\n        done\n        isDaily\n        isExpired\n        lifetime\n      }\n    }\n  }\n": typeof types.GetCategoryDocument,
     "\n  query GetCategories($limit: Int!, $offset: Int!) {\n    categories(limit: $limit, offset: $offset) {\n      id\n      name\n      description\n      lifetime\n      roadmap {\n        id\n        name\n      }\n      tasks {\n        id\n        name\n        done\n      }\n    }\n  }\n": typeof types.GetCategoriesDocument,
     "\n  mutation CreateCategory($input: NewCategory!) {\n    createCategory(input: $input) {\n      id\n      name\n      description\n      lifetime\n    }\n  }\n": typeof types.CreateCategoryDocument,
     "\n  mutation UpdateCategory($id: ID!, $input: NewCategory!) {\n    updateCategory(id: $id, input: $input) {\n      id\n      name\n      description\n      lifetime\n    }\n  }\n": typeof types.UpdateCategoryDocument,
@@ -32,6 +33,7 @@ type Documents = {
     "\n  mutation DeleteTask($id: ID!) {\n    deleteTask(id: $id)\n  }\n": typeof types.DeleteTaskDocument,
 };
 const documents: Documents = {
+    "\n  query GetCategory($id: ID!) {\n    category(id: $id) {\n      id\n      name\n      description\n      lifetime\n      roadmap {\n        id\n        name\n      }\n      tasks {\n        id\n        name\n        description\n        done\n        isDaily\n        isExpired\n        lifetime\n      }\n    }\n  }\n": types.GetCategoryDocument,
     "\n  query GetCategories($limit: Int!, $offset: Int!) {\n    categories(limit: $limit, offset: $offset) {\n      id\n      name\n      description\n      lifetime\n      roadmap {\n        id\n        name\n      }\n      tasks {\n        id\n        name\n        done\n      }\n    }\n  }\n": types.GetCategoriesDocument,
     "\n  mutation CreateCategory($input: NewCategory!) {\n    createCategory(input: $input) {\n      id\n      name\n      description\n      lifetime\n    }\n  }\n": types.CreateCategoryDocument,
     "\n  mutation UpdateCategory($id: ID!, $input: NewCategory!) {\n    updateCategory(id: $id, input: $input) {\n      id\n      name\n      description\n      lifetime\n    }\n  }\n": types.UpdateCategoryDocument,
@@ -64,6 +66,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetCategory($id: ID!) {\n    category(id: $id) {\n      id\n      name\n      description\n      lifetime\n      roadmap {\n        id\n        name\n      }\n      tasks {\n        id\n        name\n        description\n        done\n        isDaily\n        isExpired\n        lifetime\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCategory($id: ID!) {\n    category(id: $id) {\n      id\n      name\n      description\n      lifetime\n      roadmap {\n        id\n        name\n      }\n      tasks {\n        id\n        name\n        description\n        done\n        isDaily\n        isExpired\n        lifetime\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

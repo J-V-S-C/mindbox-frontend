@@ -1,5 +1,29 @@
 import { graphql } from "../gql";
 
+export const GET_CATEGORY = graphql(`
+  query GetCategory($id: ID!) {
+    category(id: $id) {
+      id
+      name
+      description
+      lifetime
+      roadmap {
+        id
+        name
+      }
+      tasks {
+        id
+        name
+        description
+        done
+        isDaily
+        isExpired
+        lifetime
+      }
+    }
+  }
+`);
+
 export const GET_CATEGORIES = graphql(`
   query GetCategories($limit: Int!, $offset: Int!) {
     categories(limit: $limit, offset: $offset) {
