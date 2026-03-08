@@ -76,7 +76,7 @@ app/
 
 ```bash
 pnpm install
-````
+```
 
 2. Configure environment variables. Create a `.env.local` file in the root directory and set the GraphQL API endpoint:
 
