@@ -1,7 +1,9 @@
 import type { GetCategoryQuery } from "@/app/lib/gql/graphql";
 
 // Derived from the single-category query — contains all task fields
-export type TaskItem = GetCategoryQuery["category"]["tasks"][number];
+export type TaskItem = NonNullable<
+  GetCategoryQuery["category"]
+>["tasks"][number];
 
 export type TaskFilter = "all" | "pending" | "daily" | "expired";
 
