@@ -6,12 +6,7 @@ import jwt, {
 import { cookies } from "next/headers";
 
 interface JwtPayload extends JwtPayloadBase {
-  sub: string;
-}
-
-function getPublicKey(): string {
-  const keyBase64 = process.env.JWT_PUBLIC_KEY!;
-  return Buffer.from(keyBase64, "base64").toString("utf-8");
+  userID: string;
 }
 
 export async function GET() {
@@ -21,9 +16,9 @@ export async function GET() {
 
   let decoded: JwtPayload;
   try {
-    const publicKey = getPublicKey();
-    decoded = jwt.verify(token, publicKey, {
-      algorithms: ["RS256"],
+    const secret = process.env.JWT_SECRET || "secret_key";
+    decoded = jwt.verify(token, secret, {
+      algorithms: ["HS256"],
     }) as JwtPayload;
   } catch (err) {
     if (err instanceof TokenExpiredError)
@@ -31,15 +26,20 @@ export async function GET() {
     else if (err instanceof JsonWebTokenError)
       console.log("JWT error:", err.message);
     else console.log("Unexpected error:", err);
+    
     return new Response(JSON.stringify({ error: "Invalid token" }), {
       status: 401,
       headers: { "Content-Type": "application/json" },
     });
   }
 
-  const userId = decoded.sub;
+  const userId = decoded.userID;
+  if (!userId) {
+     return new Response(JSON.stringify({ error: "Missing userID in token" }), { status: 401 });
+  }
 
-  const res = await fetch(`http://localhost:3333/accounts/${userId}`, {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
+  const res = await fetch(`${baseUrl}/users/${userId}`, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });

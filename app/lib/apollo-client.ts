@@ -1,10 +1,23 @@
-import { InMemoryCache } from "@apollo/client";
-import { HttpLink } from "@apollo/client";
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from "@apollo/client";
 
-export const client = new ApolloClient({
-  link: new HttpLink({
+export function createApolloClient(token?: string) {
+  const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:3333/query",
-  }),
-  cache: new InMemoryCache(),
-});
+  });
+
+  // Usando a API moderna do ApolloLink no lugar do obsoleto 'setContext'
+  const authLink = new ApolloLink((operation, forward) => {
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      }
+    }));
+    return forward(operation);
+  });
+
+  return new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+  });
+}

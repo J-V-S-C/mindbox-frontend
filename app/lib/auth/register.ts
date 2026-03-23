@@ -11,7 +11,7 @@ export async function register(
   const password = formData.get("password") as string;
 
   try {
-    const res = await fetch("http://localhost:3333/accounts", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
