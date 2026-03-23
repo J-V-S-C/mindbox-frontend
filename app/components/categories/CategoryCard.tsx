@@ -33,7 +33,7 @@ export function CategoryCard({
     >
       <div className="flex items-start justify-between gap-3">
         <Link
-          href={`/mindbox/roadmaps/${roadmapId}/${category.id}`}
+          href={`/roadmaps/${roadmapId}/${category.id}`}
           className="flex-1 min-w-0 no-underline group/link"
         >
           <h3

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { formatLifetime, lifetimeColor } from "@/app/lib/utils/category-utils";
 import type { TaskItem as TaskItemType } from "@/app/lib/utils/task-utils";
+import { Breadcrumbs } from "@/app/components/ui/Breadcrumbs";
 
 interface Category {
   name: string;
@@ -32,23 +33,13 @@ export function CategoryHeader({
 
   return (
     <>
-      <nav className="flex items-center gap-2 mb-8 text-xs text-[var(--color-ink-faint)]">
-        <Link
-          href="/mindbox/roadmaps"
-          className="hover:text-[var(--color-amber)] transition-colors duration-200 no-underline"
-        >
-          Roadmaps
-        </Link>
-        <span>/</span>
-        <Link
-          href={`/mindbox/roadmaps/${roadmapId}`}
-          className="hover:text-[var(--color-amber)] transition-colors duration-200 no-underline"
-        >
-          {category.roadmap.name}
-        </Link>
-        <span>/</span>
-        <span className="text-[var(--color-ink-muted)]">{category.name}</span>
-      </nav>
+      <Breadcrumbs
+        items={[
+          { label: "Roadmaps", href: "/" },
+          { label: category.roadmap.name, href: `/roadmaps/${roadmapId}` },
+          { label: category.name }
+        ]}
+      />
 
       <header className="mb-10">
         <div className="flex items-start justify-between gap-4 mb-4">

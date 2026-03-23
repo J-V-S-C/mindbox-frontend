@@ -24,6 +24,7 @@ import {
 import { CategoryCard } from "@/app/components/categories/CategoryCard";
 import { CategorySkeleton } from "@/app/components/ui/skeletons/category-skeleton";
 import type { CategoryItem } from "@/app/lib/utils/category-utils";
+import { Breadcrumbs } from "@/app/components/ui/Breadcrumbs";
 
 type ModalState =
   | { type: "editRoadmap" }
@@ -108,7 +109,7 @@ export default function RoadmapPage({
 
   const handleDeleteRoadmap = async () => {
     await deleteRoadmap({ variables: { id } });
-    router.push("/mindbox/roadmaps");
+    router.push("/");
   };
 
   const handleCreateCategory = async (data: CategoryFormData) => {
@@ -206,14 +207,12 @@ export default function RoadmapPage({
 
       <main className="min-h-screen bg-[var(--color-base)]">
         <div className="max-w-4xl mx-auto px-5 pt-12 pb-24">
-          <nav className="mb-8">
-            <Link
-              href="/mindbox/roadmaps"
-              className="text-xs text-[var(--color-ink-faint)] hover:text-[var(--color-amber)] transition-colors duration-200 no-underline"
-            >
-              ← Back to roadmaps
-            </Link>
-          </nav>
+          <Breadcrumbs
+            items={[
+              { label: "Roadmaps", href: "/" },
+              { label: roadmap ? roadmap.name : "Loading..." }
+            ]}
+          />
 
           {isLoading ? (
             <div className="mb-12">

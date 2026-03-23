@@ -14,7 +14,7 @@ export function RoadmapCard({ roadmap, index }: Props) {
 
   return (
     <Link
-      href={`/mindbox/roadmaps/${roadmap.id}`}
+      href={`/roadmaps/${roadmap.id}`}
       className="animate-fade-up group flex items-center gap-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl px-5 py-4 hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-border-strong)] hover:shadow-md transition-all duration-200 no-underline"
       style={{ animationDelay: `${index * 60}ms` }}
     >

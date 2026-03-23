@@ -99,7 +99,7 @@ export default function CategoryPage({
 
   const handleDeleteCategory = async () => {
     await deleteCategory({ variables: { id: categoryId } });
-    router.push(`/mindbox/roadmaps/${roadmapId}`);
+    router.push(`/roadmaps/${roadmapId}`);
   };
 
   const handleCreateTask = async (formData: TaskFormData) => {
