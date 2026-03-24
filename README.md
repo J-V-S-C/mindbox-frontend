@@ -1,93 +1,53 @@
 # MindBox Frontend
 
-The frontend application for MindBox, providing a responsive interface for managing learning roadmaps, categories, and tasks. Built with Next.js, Apollo Client, and Tailwind CSS.
+The frontend application for MindBox, providing a responsive interface for managing learning roadmaps, categories, and tasks.
 
 ## Tech Stack
 
-- Framework: Next.js (App Router)
-- UI Library: React
-- Language: TypeScript
-- Data Fetching: Apollo Client
-- API Protocol: GraphQL
-- Code Generation: GraphQL Code Generator
-- Styling: Tailwind CSS
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Data Fetching | Apollo Client 4 (GraphQL) |
+| Auth | JWT via `httpOnly` cookies + Server Actions |
+| Styling | Tailwind CSS 4 |
+| Code Generation | GraphQL Code Generator |
+| Testing | Vitest + Testing Library |
 
-## Project Structure
+## Authentication Flow
 
-````text
-app/
-├── components/
-│   ├── ApolloProvider.tsx
-│   ├── categories/
-│   │   ├── CategoryCard.tsx
-│   │   ├── CategoryHeader.tsx
-│   │   └── CategoryModal.tsx
-│   ├── roadmaps/
-│   │   ├── CreateRoadmalModal.tsx
-│   │   ├── EditRoadmapModal.tsx
-│   │   ├── RoadmapCard.tsx
-│   │   └── ShowRoadmaps.tsx
-│   ├── tasks/
-│   │   ├── TaskEmptyState.tsx
-│   │   ├── TaskFilterTabs.tsx
-│   │   ├── TaskItem.tsx
-│   │   └── TaskModal.tsx
-│   └── ui/
-│       ├── ConfirmDialog.tsx
-│       ├── EmptyState.tsx
-│       ├── search.tsx
-│       └── skeletons/
-│           ├── category-page-skeleton.tsx
-│           ├── category-skeleton.tsx
-│           └── roadmap-skeleton.tsx
-├── globals.css
-├── layout.tsx
-├── lib/
-│   ├── apollo-client.ts
-│   ├── gql/
-│   ├── queries/
-│   │   ├── category-queries.ts
-│   │   ├── roadmap-queries.ts
-│   │   └── task-queries.ts
-│   └── utils/
-│       ├── category-utils.ts
-│       └── task-utils.ts
-├── mindbox/
-│   ├── roadmaps/
-│   │   ├── [id]/
-│   │   │   ├── [categoryId]/
-│   │   │   │   └── page.tsx
-│   │   │   └── page.tsx
-│   │   └── page.tsx
-│   └── tasks/
-│       └── page.tsx
-└── page.tsx
-````
-
+1. The login form calls the `authenticate` Server Action.
+2. The action `POST /users/login` on the Go API and receives an `access_token` (HS256 JWT).
+3. The token is stored in a secure `httpOnly` cookie (`auth_token`).
+4. `app/layout.tsx` reads the cookie server-side and injects the token into the Apollo Client factory.
+5. Every GraphQL request automatically carries the `Authorization: Bearer <token>` header.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher recommended)
-- pnpm (used as the package manager)
+- Node.js 18+
+- pnpm
 
 ### Installation
 
-1. Install the dependencies:
-
 ```bash
 pnpm install
-````
-
-
-2. Configure environment variables. Create a `.env.local` file in the root directory and set the GraphQL API endpoint:
-
-```env
-NEXT_PUBLIC_GRAPHQL_URI=http://localhost:3333/query
 ```
 
-3. Start the development server:
+### Environment Variables
+
+Create a `.env.local` file in the root:
+
+```env
+NEXT_PUBLIC_GRAPHQL_URL=http://localhost:3333/query
+NEXT_PUBLIC_API_URL=http://localhost:3333
+JWT_SECRET=your_jwt_secret_matching_the_api
+```
+
+> The `JWT_SECRET` must match the one configured in the Go API. It is used server-side only to validate and decode the token inside Next.js Route Handlers.
+
+### Development
 
 ```bash
 pnpm run dev
@@ -97,10 +57,10 @@ The application will be available at `http://localhost:3000`.
 
 ## GraphQL Code Generation
 
-This project uses `@graphql-codegen` to automatically generate TypeScript types from your GraphQL queries and schema.
-
-Whenever you update the queries in `app/lib/queries/` or the backend schema changes, run the code generator to update the types in `app/lib/gql/`:
+Whenever you update queries in `app/lib/queries/` or the backend schema changes, regenerate the TypeScript types:
 
 ```bash
 pnpm run codegen
 ```
+
+This outputs updated types into `app/lib/gql/`.
